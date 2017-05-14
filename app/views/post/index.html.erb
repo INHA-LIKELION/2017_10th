@@ -16,10 +16,13 @@
     <% @posts.each do |post| %>
         <div class='container kuboon'>
           <h3>제목 : <%= post.title %></h3>
+          <p>글 누가썼냐? : <%= post.user.email %></p>
           <p>내용 : <%= post.content %></p>
           <a d href='/post/<%= post.id %>/show'>읽기</a>
-          <a href='/post/<%= post.id %>/edit'>수정하기</a>
-          <a href='/post/<%= post.id %>/destroy'>삭제하기</a>
+          <% if post.user == current_user %>
+              <a href='/post/<%= post.id %>/edit'>수정하기</a>
+              <a href='/post/<%= post.id %>/destroy'>삭제하기</a>
+          <% end %>
         </div>
     <% end %>
   </div>

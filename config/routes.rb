@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'home#index'
-
+  devise_for :users
   # => 랑 , to:   똑같아요
   get 'post/:post_id/comment/new', to: 'comment#new'
   get 'post/:post_id/comment/create', to: 'comment#create'

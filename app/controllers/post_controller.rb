@@ -1,4 +1,5 @@
 class PostController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   def index
     @posts = Post.all
   end
@@ -12,7 +13,8 @@ class PostController < ApplicationController
   end
 
   def create
-    @post = Post.new(title: params[:title], content: params[:content])
+    @user = User.find(current_user.id)
+    @post = @user.posts.new(title: params[:title], content: params[:content])
     @post.save
     redirect_to '/post/index'
   end

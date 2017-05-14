@@ -15,9 +15,12 @@
   <h2>글내용</h2>
   <div class="container">
     <h3>제목 : <%= @post.title %></h3>
+    <p>글 누가썼냐? : <%= @post.user.email %></p>
     <p>내용 : <%= @post.content %></p>
-    <a href='/post/<%= @post.id %>/edit'>수정하기</a>
-    <a href='/post/<%= @post.id %>/destroy'>삭제하기</a>
+    <% if @post.user == current_user %>
+        <a href='/post/<%= @post.id %>/edit'>수정하기</a>
+        <a href='/post/<%= @post.id %>/destroy'>삭제하기</a>
+    <% end %>
   </div>
   <div class="container">
     <div class="container">
@@ -26,8 +29,11 @@
     <% @comments.each do |comment| %>
         <div class='container kuboon'>
           <p>댓글 : <%= comment.content %></p>
-          <a href='/post/<%= @post.id %>/comment/<%= comment.id %>/edit'>수정</a>
-          <a href='/post/<%= @post.id %>/comment/<%= comment.id %>/destroy'>삭제</a>
+          <p>댓글 누가 달았냐? : <%= comment.user.email %></p>
+          <% if comment.user == current_user %>
+              <a href='/post/<%= @post.id %>/comment/<%= comment.id %>/edit'>수정</a>
+              <a href='/post/<%= @post.id %>/comment/<%= comment.id %>/destroy'>삭제</a>
+          <% end %>
         </div>
     <% end %>
   </div>

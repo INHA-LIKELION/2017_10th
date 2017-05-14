@@ -42,3 +42,4 @@ bower.json
 .byebug_history
 blorgh/test/dummy/db/
 public/uploads/
+.idea
