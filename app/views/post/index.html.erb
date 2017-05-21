@@ -13,11 +13,14 @@
 <div class="container">
   <h2>글잔치</h2>
   <div class="container">
+    <%= paginate @posts %>
     <% @posts.each do |post| %>
         <div class='container kuboon'>
           <h3>제목 : <%= post.title %></h3>
           <p>글 누가썼냐? : <%= post.user.email %></p>
           <p>내용 : <%= post.content %></p>
+          <img src="<%= post.url %>">
+          <p><%= post.created_at %></p>
           <a d href='/post/<%= post.id %>/show'>읽기</a>
           <% if post.user == current_user %>
               <a href='/post/<%= post.id %>/edit'>수정하기</a>

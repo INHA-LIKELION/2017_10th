@@ -1,7 +1,8 @@
 class PostController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+
   def index
-    @posts = Post.all
+    @posts = Post.page params[:page]
   end
 
   def show
@@ -14,7 +15,9 @@ class PostController < ApplicationController
 
   def create
     @user = User.find(current_user.id)
-    @post = @user.posts.new(title: params[:title], content: params[:content])
+    uploader = ImgUploader.new
+    uploader.store!(params[:img])
+    @post = @user.posts.new(title: params[:title], content: params[:content], url: uploader.url)
     @post.save
     redirect_to '/post/index'
   end
@@ -33,7 +36,7 @@ class PostController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-    @post.comments.destroy_all
+    # @post.comments.destroy_all
     @post.destroy
     redirect_to '/post/index'
   end
